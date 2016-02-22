@@ -4,8 +4,6 @@ terraformのインテグレーションをatlasとgithubで試した記録
 
 ## github
 
-githubと連携させるための設定
-
 ```
 cd trying_out_terraform_with_atlas
 git init .
