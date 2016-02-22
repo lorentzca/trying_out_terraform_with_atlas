@@ -55,8 +55,6 @@ atlasに管理ページが作成される
 
 ### atlas側の設定をする
 
-<https://atlas.hashicorp.com/lorentzca/environments/trying_out_terraform_with_atlas/settings>
-
 - terraformのplan結果に何かしら機密情報が含ま得れる場合もあるかもしれない(RDSのパスワードとか)のでプライベートにしておいたほうが良さそう(デフォルトでプライベートになっている)
 - terraformのバージョン指定もしておく
 
@@ -71,8 +69,6 @@ terraform push -name <atlas-uername>/trying_out_terraform_with_atlas
 ```
 
 ### githubのリポジトリに接続する
-
-<https://atlas.hashicorp.com/lorentzca/environments/trying_out_terraform_with_atlas/integrations>
 
 - terraform directoryはtfファイルがリポジトリのroot以下に無い場合(`terraform/main.tf`とか)指定する
 
@@ -118,3 +114,24 @@ PRのステータスもグリーンになった
 ## メモ
 
 ### terraformの状態管理をatlas以外にした場合
+
+terraformのバックエンドをs3にしてみる
+
+- [terraformの状態管理をatlasに指定する](https://github.com/Lorentzca/trying_out_terraform_with_atlas#terraformの状態管理をatlasに指定する)から分岐
+
+```
+terraform remote config -backend=S3 -backend-config="bucket=terraform-20160222" -backend-config="key=terraform.tfstate"
+```
+
+当然この時点でまだatrasに管理ページは作られない  
+新規にenvironmentを作成する
+
+![](./images/environment1.png)
+
+![](./images/environment2.png)
+
+この時点でgithubの接続と、terraformのatlasへのリンクが完了する
+
+- `terraform remote config -backend-config "name=<atlas-uername>/trying_out_terraform_with_atlas"`した場合最初からリンクされないのは、atlasをterraformのバックエンドとしてしか指定していないから？
+
+後は同じように環境変数を設定しておく
