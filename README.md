@@ -130,6 +130,8 @@ terraform remote config -backend=S3 -backend-config="bucket=terraform-20160222" 
 
 ![](./images/environment2.png)
 
-この時点でgithubの接続と、terraformのatlasへのリンクが完了していた
+この時点でgithubの接続と、terraformのatlasへのリンクが完了する
+
+- `terraform remote config -backend-config "name=<atlas-uername>/trying_out_terraform_with_atlas"`した場合最初からリンクされないのは、atlasをterraformのバックエンドとしてしか指定していないから？
 
 後は同じように環境変数を設定しておく
