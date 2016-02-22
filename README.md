@@ -172,3 +172,46 @@ Plan: 1 to add, 0 to change, 1 to destroy.
 - atlas上では新しく作成したように見えている(= s3の情報見えていない)
 
 ![](./images/plan1.png)
+
+バックエンドをatlasにした場合
+
+- ローカル(atlas参照)と一致する
+
+```
+$ terraform plan
+Refreshing Terraform state prior to plan...
+
+aws_vpc.main: Refreshing state... (ID: vpc-12ef9d77)
+
+The Terraform execution plan has been generated and is shown below.
+Resources are shown in alphabetical order for quick scanning. Green resources
+will be created (or destroyed and then created if an existing resource
+exists), yellow resources are being changed in-place, and red resources
+will be destroyed.
+
+Note: You didn't specify an "-out" parameter to save this plan, so when
+"apply" is called, Terraform can't guarantee this is what will execute.
+
+-/+ aws_vpc.main
+    cidr_block:                "10.0.0.0/28" => "10.0.0.0/16" (forces new resource)
+    default_network_acl_id:    "acl-4f72252a" => "<computed>"
+    default_security_group_id: "sg-3db34c59" => "<computed>"
+    dhcp_options_id:           "dopt-48aaa22a" => "<computed>"
+    enable_dns_hostnames:      "" => "<computed>"
+    enable_dns_support:        "" => "<computed>"
+    main_route_table_id:       "rtb-02a6f467" => "<computed>"
+    tags.#:                    "1" => "1"
+    tags.Name:                 "trying_out_terraform_with_atlas" => "trying_out_terraform_with_atlas"
+
+
+Plan: 1 to add, 0 to change, 1 to destroy.
+```
+
+![](./images/plan2.png)
+
+## まとめ
+
+- terraformの状態の保存先をs3にしてもatlasにしてもgithubと接続してplan実行自体は出来る
+- しかし、実際の環境との差分は、terraformの状態の保存先をatlasにしないと見れない
+	- atlas側の`/terraform/terraform.tfplan`というファイルとの差分を見ているからと思われる(s3バックエンドにしてもs3を参照してくれない)
+- terraformの状態の保存先をatlasにしないと実質使えない
