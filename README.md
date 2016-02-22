@@ -1,14 +1,23 @@
-# trying out terraform with atlas
+# trying out terraform with atlas and github
 
-terraformのインテグレーションをatlasで試す
+terraformのインテグレーションをatlasとgithubで試した記録
 
-## git
+## github
+
+githubと連携させるための設定
 
 ```
 cd trying_out_terraform_with_atlas
 git init .
 git add .
 git commit -m '1st commit'
+```
+
+githubにリポジトリ作っておく
+
+```
+git remote add origin git@github.com:Lorentzca/trying_out_terraform_with_atlas.git
+git push -u origin master
 ```
 
 ## atlasトークンを取得する
