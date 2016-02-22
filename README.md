@@ -118,3 +118,61 @@ PRのステータスもグリーンになった
 ## メモ
 
 ### terraformの状態管理をatlas以外にした場合
+
+terraformのバックエンドをs3にしてみる
+
+- [terraformの状態管理をatlasに指定する](https://github.com/Lorentzca/trying_out_terraform_with_atlas#terraformの状態管理をatlasに指定する)から分岐
+
+```
+terraform remote config -backend=S3 -backend-config="bucket=terraform-20160222" -backend-config="key=terraform.tfstate"
+```
+
+当然この時点でまだatrasに管理ページは作られない  
+新規にenvironmentを作成する
+
+![](./images/environment1.png)
+
+![](./images/environment2.png)
+
+この時点でgithubの接続と、terraformのatlasへのリンクが完了する
+
+- `terraform remote config -backend-config "name=<atlas-uername>/trying_out_terraform_with_atlas"`した場合最初からリンクされないのは、atlasをterraformのバックエンドとしてしか指定していないから？
+
+後は同じように環境変数を設定しておく
+
+apply後設定を変更してみると…
+
+- ローカル(s3参照)だと差分があるが
+
+```
+$ terraform plan
+Refreshing Terraform state prior to plan...
+
+aws_vpc.main: Refreshing state... (ID: vpc-01e89a64)
+
+The Terraform execution plan has been generated and is shown below.
+Resources are shown in alphabetical order for quick scanning. Green resources
+will be created (or destroyed and then created if an existing resource
+exists), yellow resources are being changed in-place, and red resources
+will be destroyed.
+
+Note: You didn't specify an "-out" parameter to save this plan, so when
+"apply" is called, Terraform can't guarantee this is what will execute.
+
+-/+ aws_vpc.main
+    cidr_block:                "10.0.0.0/28" => "10.0.0.0/16" (forces new resource)
+    default_network_acl_id:    "acl-f976219c" => "<computed>"
+    default_security_group_id: "sg-21bb4445" => "<computed>"
+    dhcp_options_id:           "dopt-48aaa22a" => "<computed>"
+    enable_dns_hostnames:      "" => "<computed>"
+    enable_dns_support:        "" => "<computed>"
+    main_route_table_id:       "rtb-d4a2f0b1" => "<computed>"
+    tags.#:                    "1" => "1"
+    tags.Name:                 "trying_out_terraform_with_atlas" => "trying_out_terraform_with_atlas"
+
+
+Plan: 1 to add, 0 to change, 1 to destroy.
+```
+- atlas上では新しく作成したように見えている(= s3の情報見えていない)
+
+![](./images/plan1.png)
