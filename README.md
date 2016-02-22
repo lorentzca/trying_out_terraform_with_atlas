@@ -55,8 +55,6 @@ atlasに管理ページが作成される
 
 ### atlas側の設定をする
 
-<https://atlas.hashicorp.com/lorentzca/environments/trying_out_terraform_with_atlas/settings>
-
 - terraformのplan結果に何かしら機密情報が含ま得れる場合もあるかもしれない(RDSのパスワードとか)のでプライベートにしておいたほうが良さそう(デフォルトでプライベートになっている)
 - terraformのバージョン指定もしておく
 
@@ -71,8 +69,6 @@ terraform push -name <atlas-uername>/trying_out_terraform_with_atlas
 ```
 
 ### githubのリポジトリに接続する
-
-<https://atlas.hashicorp.com/lorentzca/environments/trying_out_terraform_with_atlas/integrations>
 
 - terraform directoryはtfファイルがリポジトリのroot以下に無い場合(`terraform/main.tf`とか)指定する
 
