@@ -97,8 +97,6 @@ variablesの設定から行う
 
 ![](./images/variables2.png)
 
-terraform.tfvarsを使っている場合はterraform pushしたら自動で変数が使えるようになるっぽい
-
 ### 再度コミット
 
 plan成功
